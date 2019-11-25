@@ -10,7 +10,12 @@
   * @constant	ROCHER		Case occupée par un obstacle de type rocher
   * @constant	EAU			Case occupée par un obstacle de type eau
   */
-typedef enum { LIBRE, EAU, ROCHER } Case;
+typedef enum
+{
+	LIBRE,
+	EAU,
+	ROCHER
+} Case;
 
 /** @define DIM_MAX		longueur max qu'une ligne ou un colonne d'une matrice de terrain pourrait avoir */
 #define DIM_MAX 256
@@ -22,7 +27,8 @@ typedef enum { LIBRE, EAU, ROCHER } Case;
  * @field	int		hauteur		hauteru du terrain (ordonnée - y)
  * @field	Case	tab			matrice du terrain (quadrillage)
  */
-typedef struct {
+typedef struct
+{
 	int largeur, hauteur;
 	Case tab[DIM_MAX][DIM_MAX];
 } Terrain;
@@ -42,7 +48,8 @@ typedef struct {
  * @constant	ERREUR_POSITION_ROBOT_MANQUANTE		Curiosity non trouvé dans le fichier: non positioné
  * @constant	AUCUNE_ERREUR						aucune erreur trouvée
  */
-typedef enum {
+typedef enum
+{
 	ERREUR_FICHIER,
 	ERREUR_LECTURE_LARGEUR,
 	ERREUR_LECTURE_HAUTEUR,
@@ -58,7 +65,7 @@ typedef enum {
 } Erreur_terrain;
 
 // constructor
-Erreur_terrain lire_terrain(char * nom_fichier, Terrain * t, int * x, int * y);
+Erreur_terrain lire_terrain(char *nom_fichier, Terrain *t, int *x, int *y);
 
 // getters
 int largeur(Terrain t);
@@ -68,13 +75,12 @@ int hauteur(Terrain t);
 int est_case_libre(Terrain t, int x, int y);
 
 // printer
-void afficher_terrain(Terrain * t);
+void afficher_terrain(Terrain *t);
 
 //terrain random
-terrain random_terrain(int l, int h, float obstacles);
-
+Terrain random_terrain(int l, int h, float obstacles);
 
 // writer
-void ecrire_terrain(FILE *f,Terrain T, int x, int y);
+void ecrire_terrain(FILE *f, Terrain T, int x, int y);
 
 #endif

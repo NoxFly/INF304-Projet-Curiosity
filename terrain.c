@@ -2,6 +2,7 @@
 #include "robot.h"
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 /**
  * @function	longueur
@@ -168,8 +169,8 @@ int est_case_libre(Terrain t, int x, int y) {
 }
 
 void ecrire_terrain(FILE *f, Terrain T, int x, int y){
-	fprintf(f, "%d\n",T.largeur);
-	fprintf(f, "%d\n",T.hauteur);
+	fprintf(f,"%d\n",T.largeur);
+	fprintf(f,"%d\n",T.hauteur);
 	for(int i = 0;i<T.largeur;i++){
 		for(int j = 0;j<T.hauteur;i++){
 			switch (T.tab[i][j]) {
@@ -183,10 +184,7 @@ void ecrire_terrain(FILE *f, Terrain T, int x, int y){
 				case EAU: fprintf(f, "~");break;
 				case ROCHER: fprintf(f, "#");break;
 			}
+			fprintf(f,"\n");
 		}
 	}
-}
-
-terrain random_terrain(int l, int h, float obstacles){
-  print("La fonction est a faire");
 }

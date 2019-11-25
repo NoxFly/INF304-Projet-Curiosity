@@ -13,13 +13,12 @@
 void generation_aleatoire(Terrain* T, int l, int h, float dObst){
   T->largeur = l;
 	T->hauteur = h;
-	int val_rand;
-	int val_obst = dObst * 100
-	srand(time());
+	int val_obst = dObst * 100;
+	srand(time(NULL));
 	for(int i = 0;i<l;i++){
 		for(int j = 0;j<h;j++){
-			v_rand = rand()%101;
-			if(val_rand>val_obst){
+			int v_rand = rand()%101;
+			if(v_rand>val_obst){
 				T->tab[i][j] = LIBRE;
 			}
 			else{
