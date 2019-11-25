@@ -68,6 +68,7 @@ int main(int argc, char **argv){
 		afficher_terrain(&T);
 
 		ecrire_terrain(resFile, T, (int)(l/2), (int)(h/2));
+    fprintf(resFile,"\n");
 	}
   // Écriture des terrains générés dans le fichier resFile
   // Écriture/Affichage des statistiques
