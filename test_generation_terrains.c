@@ -25,7 +25,7 @@ int nb_cases_occupees(Terrain T){
 // generation_terrains N largeur hauteur dObstacle fichier_res
 // la sortie se fait dans le fichier resultat
 
-int main(int argc, char ** argv){
+int main(int argc, char **argv){
   int N, i, l, h;
   float dObst;
   FILE* resFile;
@@ -35,7 +35,7 @@ int main(int argc, char ** argv){
     printf("Usage: %s <N> <largeur> <hauteur> <densite_obstacle> <fichier_res> \n", argv[0]);
     return 1;
   }
-	printf("La fonction est passée par la");
+
   N = strtol(argv[1], NULL, 10);
   l = strtol(argv[2], NULL, 10);
   h = strtol(argv[3], NULL, 10);
@@ -61,11 +61,13 @@ int main(int argc, char ** argv){
   // Génération aléatoire des terrains
 	for(int i = 0;i<N;i++){
 		Terrain T;
-		generation_aleatoire(&T,l,h,dObst);
-		while(existe_chemin_vers_sortie(T)){
+		do {
 			generation_aleatoire(&T,l,h,dObst);
-		}
-		ecrire_terrain(resFile,T,T.largeur,T.hauteur);
+		} while(!existe_chemin_vers_sortie(T));
+
+		afficher_terrain(&T);
+
+		ecrire_terrain(resFile, T, (int)(l/2), (int)(h/2));
 	}
   // Écriture des terrains générés dans le fichier resFile
   // Écriture/Affichage des statistiques

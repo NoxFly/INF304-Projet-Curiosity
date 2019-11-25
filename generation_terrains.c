@@ -70,8 +70,8 @@ int existe_chemin_vers_sortie(Terrain T){
     }
   }
   // marquer la seule case centrale
-  x = l/2;
-  y = h/2;
+  x = (int)(l/2);
+  y = (int)(h/2);
   Marque[x][y] = 1;
 
   // boucle de recherche du chemin : trouver un ensemble connexe
