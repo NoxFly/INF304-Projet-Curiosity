@@ -23,31 +23,74 @@ typedef struct {
 	Orientation o;
 } Robot;
 
-/* initialiser le robot r en position (x,y) et orientation o */
+/**
+ * @function init_robot
+ * @param   Robot           *r      Robot ciblé
+ * @param   int             x       x que doit prendre le robot pour abscisse
+ * @param   int             y       y que doit prendre le robot pour ordonnée
+ * @param   Orientation     o       orientation que doit prendre le robot
+ * @return  void
+ */
 void init_robot(Robot *r, int x, int y, Orientation o);
 
-/* faire avancer le robot d'une case */
+/**
+ * @function    avancer
+ * @param   Robot   *r      Robot ciblé
+ * @return  void
+ */
 void avancer(Robot *r);
 
-/* faire tourner le robot à gauche */
+/**
+ * @function    tourner_a_gauche
+ * @param   Robot   *r      Robot ciblé
+ * @return  void
+ */
 void tourner_a_gauche(Robot *r);
 
-/* faire tourner le robot à droite */
+/**
+ * @function    tourner_a_droite
+ * @param   Robot   *r      Robot ciblé
+ * @return  void
+ */
 void tourner_a_droite(Robot *r);
 
-/* recupere la position de la case du robot */
+/**
+ * @function    position
+ * @param   Robot   r       Robot ciblé
+ * @param   int     *x      x qui recevra la position x du robot
+ * @param   int     *y      y qui recevra la position y du robot
+ * @return  void
+ */
 void position(Robot r, int *x, int *y);
 
-/* recupere la position en abscisse de la case du robot */
+/**
+ * @function    abscisse    getter
+ * @param   Robot   r       Robot ciblé
+ * @return  int
+ */
 int abscisse(Robot r);
 
-/* recupere la position en ordonnee de la case du robot */
+/**
+ * @function    ordonnee    getter
+ * @param   Robot   r       Robot ciblé
+ * @return  int
+ */
 int ordonnee(Robot r);
 
-/* recupere l'orientation du robot */
+/**
+ * @function    orient      getter
+ * @param   Robot   r       Robot ciblé
+ * @return  Orientation
+ */
 Orientation orient(Robot r);
 
-/* recupere la position de la case devant le robot */
+/**
+ * @function    position_devant
+ * @param   Robot   r       Robot ciblé
+ * @param   int     *x      x qui recevra le x de la case située devant le robot
+ * @param   int     *y      y qui recevra le y de la case située devant le robot
+ * @return void
+ */
 void position_devant(Robot r, int *x, int *y);
 
 #endif

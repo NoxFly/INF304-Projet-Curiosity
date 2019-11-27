@@ -4,35 +4,23 @@
 #include <string.h>
 #include <time.h>
 
-/**
- * @function	longueur
- * @param	char	*ligne
- * @return	int
- */
 int longueur(char *ligne) {
 	int i = 0;
 	while(ligne[i] != '\n' && ligne[i] != '\0') i++;
+	if(ligne[i] == '\0') i++; // dernière ligne d'un document, s'il n'y a pas de retour a la ligne
 	return i;
 }
 
-/**
-  * @function					lire_terrain
-  * @param	char				*nom_fichier		nom du fichier à ouvrir
-  * @param	Terrain_t			*t					terrain (empty)
-  * @param	int					*x					position x du robot Curiosity
-  * @param	int					*y					position y du robot Curiosity
-  * @return	Erreur_terrain							suivant si la lecture et le stockage des variable s'est bien passé ou non
- */
-Erreur_terrain lire_terrain(char * nom_fichier, Terrain * t, int * x, int * y) {
-	FILE * f;
-	int l, h; // Dimensions du terrain
+Erreur_terrain lire_terrain(char *nom_fichier, Terrain *t, int *x, int *y) {
+	FILE *f;
+	int l, h;   // Dimensions du terrain
 	int rx, ry; // Coordonnées initiales du robot
 	char ligne[DIM_MAX];
 	Case c;
 
 	// réponses des checks erreurs
 	int check;
-	char* check2;
+	char *check2;
 	int foundCuriosity = 0;
 
 	// Ouverture du fichier en lecture
@@ -45,7 +33,7 @@ Erreur_terrain lire_terrain(char * nom_fichier, Terrain * t, int * x, int * y) {
 	check = fscanf(f, "%d", &l); // stockage de la largeur dans l
 	if(check == 0 || check == EOF) { // si il n'y avait rien, ou une lettre, ou la fin du fichier -> sortie
 		return ERREUR_LECTURE_LARGEUR;
-	} else if (l < 0 || l > DIM_MAX) { // si la largeur dépasse les limites -> sortie
+	} else if(l < 0 || l > DIM_MAX) { // si la largeur dépasse les limites -> sortie
 		return ERREUR_LARGEUR_INCORRECTE;
 	}
 
@@ -53,7 +41,7 @@ Erreur_terrain lire_terrain(char * nom_fichier, Terrain * t, int * x, int * y) {
 	check = fscanf(f, "%d", &h); // stoackage de la hauteur dans h
 	if(check == 0 || check == EOF) { // si rien, lettre ou fin de fichier -> sortie
 		return ERREUR_LECTURE_HAUTEUR;
-	} else if (h < 0 || h > DIM_MAX) { // si dépassement des limites -> sortie
+	} else if(h < 0 || h > DIM_MAX) { // si dépassement des limites -> sortie
 		return ERREUR_HAUTEUR_INCORRECTE;
 	}
 
@@ -70,7 +58,7 @@ Erreur_terrain lire_terrain(char * nom_fichier, Terrain * t, int * x, int * y) {
 		}
 
 		int len = longueur(ligne); // longueur de la ligne
-		if (len > DIM_MAX) { // si elle dépasse la limite autorisée
+		if(len > DIM_MAX) { // si elle dépasse la limite autorisée
 			return ERREUR_LIGNE_TROP_LONGUE;
 		} else if(len != l) { // si la longueur de la ligne est différente de celle annoncée pour le terrain
 			return ERREUR_LONGUEUR_LIGNE;
@@ -78,10 +66,16 @@ Erreur_terrain lire_terrain(char * nom_fichier, Terrain * t, int * x, int * y) {
 
 		// pour chaque caractère de la ligne (.#~)
 		for(int j = 0; j < l; j++) {
-			switch (ligne[j]) {
-				case '.': c = LIBRE; 	break;
-				case '#': c = ROCHER; 	break;
-				case '~': c = EAU; 		break;
+			switch(ligne[j]) {
+				case '.':
+					c = LIBRE;
+					break;
+				case '#':
+					c = ROCHER;
+					break;
+				case '~':
+					c = EAU;
+					break;
 				case 'C':
 					// Initialisation de la position du robot
 					rx = j; // variables intermédiaires
@@ -111,60 +105,43 @@ Erreur_terrain lire_terrain(char * nom_fichier, Terrain * t, int * x, int * y) {
 	return AUCUNE_ERREUR;
 }
 
-/**
- * @function	largeur			getter
- * @param	Terrain		t		terrain ciblé
- * @return	int
- */
 int largeur(Terrain t) {
 	return t.largeur;
 }
 
-/**
- * @function	hauteur			getter
- * @param	Terrain		t		terrain ciblé
- * @return	int
- */
 int hauteur(Terrain t) {
 	return t.hauteur;
 }
 
-/**
- * @function	afficher_terrain
- * @param	Terrain		*t		terrain à afficher
- * @return	void
- */
-void afficher_terrain(Terrain *t,int a,int b) {
-	for(int y=0; y < hauteur(*t); y++) { // hauteur du terrain
-		for(int x=0; x < largeur(*t); x++) { // largeur du terrain
-			if(a == x && b == y){
+void afficher_terrain(Terrain *t, int a, int b) {
+	for(int y = 0; y < hauteur(*t); y++) { // hauteur du terrain
+		for(int x = 0; x < largeur(*t); x++) { // largeur du terrain
+			if(a == x && b == y) {
 				printf("c");
+			} else {
+				switch(t->tab[y][x]) { // on ne peut pas afficher un type Case dans un printf, donc on regarde sa correspondance en format char
+					case LIBRE:
+						printf(".");
+						break;
+					case ROCHER:
+						printf("#");
+						break;
+					case EAU:
+						printf("~");
+						break;
+				}
 			}
-			else{
-			switch(t->tab[y][x]) { // on ne peut pas afficher un type Case dans un printf, donc on regarde sa correspondance en format char
-				case LIBRE: 	printf("."); break;
-				case ROCHER: 	printf("#"); break;
-				case EAU: 		printf("~");break;
-			}
-		}
 		}
 		printf("\n"); // ligne suivante
 	}
 }
 
-/**
- * @function	est_case_libre
- * @param	Terrain		t		terrain ciblé
- * @param	int			x		case à l'abscisse x où il faut regarder l'état
- * @param	int			y		case à l'ordonnée y où il faut regarder l'état
- * @return	int
- */
 int est_case_libre(Terrain t, int x, int y) {
 	if(
-		x > -1 && // si ne déborder pas à gauche
-		y > -1 && // ni en haut
-		x < t.largeur && // ni à droite
-		y < t.hauteur && // ni en bas
+		x > -1 &&			 // si ne déborder pas à gauche
+		y > -1 &&			 // ni en haut
+		x < t.largeur &&	 // ni à droite
+		y < t.hauteur &&	 // ni en bas
 		t.tab[y][x] == LIBRE // et qu'il n'y a pas d'obstacle
 	) {
 		return 1; // retourne vrai
@@ -173,24 +150,28 @@ int est_case_libre(Terrain t, int x, int y) {
 	return 0; // sinon faux
 }
 
-void ecrire_terrain(FILE *f, Terrain T, int x, int y){
-	fprintf(f,"%d\n",T.largeur);
-	fprintf(f,"%d\n",T.hauteur);
-	for(int i=0;i < T.hauteur; i++){
-		for(int j=0;j < T.largeur; j++){
-			if(x == i & y == j){
+void ecrire_terrain(FILE *f, Terrain T, int x, int y) {
+	fprintf(f, "%d\n", T.largeur);
+	fprintf(f, "%d\n", T.hauteur);
+	for(int i = 0; i < T.hauteur; i++) {
+		for(int j = 0; j < T.largeur; j++) {
+			if(x == i & y == j) {
 				fprintf(f, "c");
-			}
-			else {
-			switch (T.tab[i][j]) {
-				case LIBRE:
-						fprintf(f,".");
-					break;
-				case EAU: fprintf(f, "~");break;
-				case ROCHER: fprintf(f, "#");break;
-			}
+			} else {
+				switch(T.tab[i][j]) {
+					case LIBRE:
+						fprintf(f, ".");
+						break;
+					case EAU:
+						fprintf(f, "~");
+						break;
+					case ROCHER:
+						fprintf(f, "#");
+						break;
+				}
 			}
 		}
-		if(i < T.hauteur-1) fprintf(f,"\n");
+		
+		if(i < T.hauteur - 1) fprintf(f, "\n");
 	}
 }

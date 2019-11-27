@@ -64,23 +64,62 @@ typedef enum
 	AUCUNE_ERREUR
 } Erreur_terrain;
 
-// constructor
+// CONSTRUCTOR
+/**
+  * @function					lire_terrain
+  * @param	char				*nom_fichier		nom du fichier à ouvrir
+  * @param	Terrain_t			*t					terrain (empty)
+  * @param	int					*x					position x du robot Curiosity
+  * @param	int					*y					position y du robot Curiosity
+  * @return	Erreur_terrain							suivant si la lecture et le stockage des variable s'est bien passé ou non
+ */
 Erreur_terrain lire_terrain(char *nom_fichier, Terrain *t, int *x, int *y);
 
-// getters
+// GETTERS
+/**
+ * @function	largeur			getter
+ * @param	Terrain		t		terrain ciblé
+ * @return	int
+ */
 int largeur(Terrain t);
+
+/**
+ * @function	hauteur			getter
+ * @param	Terrain		t		terrain ciblé
+ * @return	int
+ */
 int hauteur(Terrain t);
 
-// boolean state
+/**
+ * @function	longueur
+ * @param	char	*ligne
+ * @return	int
+ */
+int longueur(char *ligne);
+
+/**
+ * @function	est_case_libre
+ * @param	Terrain		t		terrain ciblé
+ * @param	int			x		case à l'abscisse x où il faut regarder l'état
+ * @param	int			y		case à l'ordonnée y où il faut regarder l'état
+ * @return	int
+ */
 int est_case_libre(Terrain t, int x, int y);
 
-// printer
-void afficher_terrain(Terrain *t,int a,int b);
+/**
+ * @function	afficher_terrain
+ * @param	Terrain		*t		terrain à afficher
+ * @return	void
+ */
+void afficher_terrain(Terrain *t, int a, int b);
 
-//terrain random
-Terrain random_terrain(int l, int h, float obstacles);
-
-// writer
+/**
+  * @function					ecrire_terrain
+  * @param	char				*nom_fichier		nom du fichier à ouvrir
+  * @param	Terrain_t			*T					terrain à stringifier dans le fichier
+  * @param	int					*x					position x du robot Curiosity
+  * @param	int					*y					position y du robot Curiosity
+ */
 void ecrire_terrain(FILE *f, Terrain T, int x, int y);
 
 #endif
