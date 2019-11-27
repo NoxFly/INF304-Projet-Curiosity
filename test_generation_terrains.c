@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <unistd.h>
 #include "generation_terrains.h"
 #include "terrain.h"
 
@@ -62,16 +62,22 @@ int main(int argc, char **argv){
 
 	// Génération aléatoire des terrains
 	for(int i = 0; i < N; i++) {
+		printf("Génération d'un terrain aléatoire...\n");
+
 		Terrain T;
+		
 		do {
 			generation_aleatoire(&T, l, h, dObst);
 		} while(!existe_chemin_vers_sortie(T));
-    printf("Terrain aléatoire numéro %d : \n",i);
+
+    	printf("Terrain aléatoire numéro %d : \n",i+1);
 		afficher_terrain(&T,(int)(l/2), (int)(h/2));
-    printf("\n");
+    	printf("\n");
 
 		ecrire_terrain(resFile, T, (int)(l / 2), (int)(h / 2));
 		fprintf(resFile, "\n");
+
+		sleep(1);
 	}
 
 	// Écriture des terrains générés dans le fichier resFile
