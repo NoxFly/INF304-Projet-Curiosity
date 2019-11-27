@@ -3,6 +3,8 @@
 #include <time.h>
 #include "generation_terrains.h"
 
+unsigned int u = 0;
+
 /* Génère aléatoirement un terrain T, de largeur l, de hauteur h,
    avec une densité d'obstacle dObst : 0 <= dObst <= 1.
    Précondition : T est un pointeur vers un terrain existant.
@@ -13,7 +15,7 @@ void generation_aleatoire(Terrain *T, int l, int h, float dObst) {
 	T->largeur = l;
 	T->hauteur = h;
 	int val_obst = dObst * 100;
-	srand(time(NULL));
+	srand(time(NULL) + (++u));
 	for(int i = 0; i < l; i++) {
 		for(int j = 0; j < h; j++) {
 			int v_rand = rand() % 101;
