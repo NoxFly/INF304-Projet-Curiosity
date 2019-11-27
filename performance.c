@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <iostream.h>
 #include <time.h>
 
 #include "performance.h"
@@ -11,7 +10,7 @@ void performance(FILE* f_open,int L,int H,int d_obst,int nb_max_step,FILE* f_wri
 
 int main(int argc,char* argv){
     if(argc != 9){
-        printf("Utilisation demandée : curiosity-perf fichier_programme N L H d graine nb_step_max fichier_res")
+        printf("Utilisation demandée : curiosity-perf fichier_programme N L H d graine nb_step_max fichier_res");
         return 1;
     }
     int N,L,H,d_obst,nb_max_step;
