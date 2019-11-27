@@ -1,0 +1,9 @@
+*.o
+robot_terrain
+curiosity
+curiosity-test
+test_generation_terrains
+test_robot
+test_terrain
+curiosity-obs
+curiosity_perf
