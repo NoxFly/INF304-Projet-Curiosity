@@ -26,10 +26,9 @@ int nb_cases_occupees(Terrain T){
 // la sortie se fait dans le fichier resultat
 
 int main(int argc, char **argv){
-  int N, i, l, h;
+  int N, l, h;
   float dObst;
   FILE* resFile;
-  Terrain T;
 
   if (argc < 6) {
     printf("Usage: %s <N> <largeur> <hauteur> <densite_obstacle> <fichier_res> \n", argv[0]);
@@ -64,8 +63,9 @@ int main(int argc, char **argv){
 		do {
 			generation_aleatoire(&T,l,h,dObst);
 		} while(!existe_chemin_vers_sortie(T));
-
+    printf("Terrain aléatoire numéro %d : \n",i);
 		afficher_terrain(&T,(int)(l/2), (int)(h/2));
+    printf("\n");
 
 		ecrire_terrain(resFile, T, (int)(l/2), (int)(h/2));
     fprintf(resFile,"\n");
