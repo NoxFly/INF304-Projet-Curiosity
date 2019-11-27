@@ -134,14 +134,19 @@ int hauteur(Terrain t) {
  * @param	Terrain		*t		terrain à afficher
  * @return	void
  */
-void afficher_terrain(Terrain *t) {
+void afficher_terrain(Terrain *t,int a,int b) {
 	for(int y=0; y < hauteur(*t); y++) { // hauteur du terrain
 		for(int x=0; x < largeur(*t); x++) { // largeur du terrain
+			if(a == x && b == y){
+				printf("c");
+			}
+			else{
 			switch(t->tab[y][x]) { // on ne peut pas afficher un type Case dans un printf, donc on regarde sa correspondance en format char
 				case LIBRE: 	printf("."); break;
 				case ROCHER: 	printf("#"); break;
-				case EAU: 		printf("~");
+				case EAU: 		printf("~");break;
 			}
+		}
 		}
 		printf("\n"); // ligne suivante
 	}
@@ -173,17 +178,17 @@ void ecrire_terrain(FILE *f, Terrain T, int x, int y){
 	fprintf(f,"%d\n",T.hauteur);
 	for(int i=0;i < T.hauteur; i++){
 		for(int j=0;j < T.largeur; j++){
+			if(x == i & y == j){
+				fprintf(f, "c");
+			}
+			else {
 			switch (T.tab[i][j]) {
 				case LIBRE:
-					if(x == i & y == j){
-						fprintf(f, "c");
-					}
-					else{
 						fprintf(f,".");
-					}
 					break;
 				case EAU: fprintf(f, "~");break;
 				case ROCHER: fprintf(f, "#");break;
+			}
 			}
 		}
 		if(i < T.hauteur-1) fprintf(f,"\n");

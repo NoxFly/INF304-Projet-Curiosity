@@ -75,7 +75,7 @@ int hauteur(Terrain t);
 int est_case_libre(Terrain t, int x, int y);
 
 // printer
-void afficher_terrain(Terrain *t);
+void afficher_terrain(Terrain *t,int a,int b);
 
 //terrain random
 Terrain random_terrain(int l, int h, float obstacles);

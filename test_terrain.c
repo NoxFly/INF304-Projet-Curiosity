@@ -30,7 +30,7 @@ void afficherErreur(Erreur_terrain e) {
  */
 int main(int argc, char ** argv) {
 	// initialisation du terrain et des valeurs intermédiaires du robot
-	Terrain t;
+	Terrain* t;
 	int x, y;
 	char *filename; // nom du fichier à ouvrir
 
@@ -41,7 +41,7 @@ int main(int argc, char ** argv) {
 	}
 
 	filename = argv[1];
-	
+
 	// on place volontairement une erreur pour rentrer au moins une fois dans le while
 	Erreur_terrain e = ERREUR_FICHIER;
 
@@ -60,6 +60,6 @@ int main(int argc, char ** argv) {
 	}
 
 	// success
-	afficher_terrain(&t);
+	afficher_terrain(&t,(int)(t->largeur)/2,(int)(t->hauteur)/2);
 	printf("Position initiale du robot : (%d, %d)\n", x, y);
 }

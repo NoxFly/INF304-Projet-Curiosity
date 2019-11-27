@@ -65,7 +65,7 @@ int main(int argc, char **argv){
 			generation_aleatoire(&T,l,h,dObst);
 		} while(!existe_chemin_vers_sortie(T));
 
-		afficher_terrain(&T);
+		afficher_terrain(&T,(int)(l/2), (int)(h/2));
 
 		ecrire_terrain(resFile, T, (int)(l/2), (int)(h/2));
     fprintf(resFile,"\n");
