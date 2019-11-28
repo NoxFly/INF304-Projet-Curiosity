@@ -1,6 +1,6 @@
-#include "environnement.h"
-#include "programme.h"
-#include "interprete.h"
+#include "../include/environnement.h"
+#include "../include/programme.h"
+#include "../include/interprete.h"
 
 #include <stdio.h>
 #include <stdlib.h>

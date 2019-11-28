@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "type_pile.h"
+#include "../include/type_pile.h"
 
 /* Constructeurs */
 

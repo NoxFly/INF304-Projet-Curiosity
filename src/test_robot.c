@@ -1,4 +1,4 @@
-#include "robot.h"
+#include "../include/robot.h"
 #include <stdio.h>
 
 /** @define TAILLE_TERRAIN ?? */

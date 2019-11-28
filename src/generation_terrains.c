@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "generation_terrains.h"
+#include "../include/generation_terrains.h"
 
 unsigned int u = 0;
 

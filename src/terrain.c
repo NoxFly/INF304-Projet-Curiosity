@@ -1,5 +1,5 @@
-#include "terrain.h"
-#include "robot.h"
+#include "../include/terrain.h"
+#include "../include/robot.h"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>

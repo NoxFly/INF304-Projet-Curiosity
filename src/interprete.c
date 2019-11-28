@@ -1,5 +1,5 @@
-#include "interprete.h"
-#include "type_pile.h"
+#include "../include/interprete.h"
+#include "../include/type_pile.h"
 
 #include <unistd.h>
 

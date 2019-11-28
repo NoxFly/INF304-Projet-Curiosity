@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "generation_terrains.h"
-#include "terrain.h"
+#include "../include/generation_terrains.h"
+#include "../include/terrain.h"
 
 int nb_cases_occupees(Terrain T) {
 	int occupee = 0;
@@ -78,7 +78,7 @@ int main(int argc, char **argv){
     	printf("\n");
 		int compt = caracteristique_terrain(&T);
 		int val_obst = dObst * 100;
-		printf("Il y a %d d'obstacles dans ce terrain contre %d attendu\n",compt,val_obst);
+		printf("Il y a %d d'obstacles dans ce terrain contre %d attendu\n\n",compt,val_obst);
 		densitee_moyenne = densitee_moyenne + compt;
 
 

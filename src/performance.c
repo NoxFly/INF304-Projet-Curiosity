@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "performance.h"
+#include "../include/performance.h"
 
 void performance(FILE* f_open,int L,int H,int d_obst,int nb_max_step,FILE* f_write){
     printf("Pas encore faite...");

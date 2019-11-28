@@ -1,47 +1,51 @@
-CC=clang -Wall
+CC := clang -Wall
+SRCDIR := ./src/
+INCDIR := ./include/
+BUILDIR := ./build/
 
-PROGRAMMES=test_terrain test_robot robot_terrain curiosity curiosity-test test_generation_terrains
+PROGRAMMES := test_terrain test_robot robot_terrain curiosity curiosity-test test_generation_terrains
 
 all: $(PROGRAMMES)
+	rm -f *.o
 
 ######################################################################
 #                       Règles de compilation                        #
 ######################################################################
 
-%.o: %.c
+%.o: $(SRCDIR)%.c
 	$(CC) -c $<
 
-test_terrain.o: test_terrain.c terrain.h
+test_terrain.o: $(SRCDIR)test_terrain.c $(INCDIR)terrain.h
 
-test_robot.o: test_robot.c robot.h
+test_robot.o: $(SRCDIR)test_robot.c $(INCDIR)robot.h
 
-robot_terrain.o: robot_terrain.c terrain.h robot.h
+robot_terrain.o: $(SRCDIR)robot_terrain.c $(INCDIR)terrain.h $(INCDIR)robot.h
 
-robot.o: robot.c robot.h
+robot.o: $(SRCDIR)robot.c $(INCDIR)robot.h
 
-terrain.o: terrain.c terrain.h
+terrain.o: $(SRCDIR)terrain.c $(INCDIR)terrain.h
 
-environnement.o: environnement.c environnement.h robot.h terrain.h
+environnement.o: $(SRCDIR)environnement.c $(INCDIR)environnement.h $(INCDIR)robot.h $(INCDIR)terrain.h
 
-programme.o: programme.c programme.h type_pile.h
+programme.o: $(SRCDIR)programme.c $(INCDIR)programme.h $(INCDIR)type_pile.h
 
-interprete.o: interprete.c interprete.h environnement.h \
-	programme.h type_pile.h robot.h terrain.h
+interprete.o: $(SRCDIR)interprete.c $(INCDIR)interprete.h $(INCDIR)environnement.h \
+	$(INCDIR)programme.h $(INCDIR)type_pile.h $(INCDIR)robot.h $(INCDIR)terrain.h
 
-interprete%.o: interprete%.c interprete.h environnement.h \
-	programme.h type_pile.h robot.h terrain.h
+interprete%.o: $(SRCDIR)interprete%.c $(INCDIR)interprete.h $(INCDIR)environnement.h \
+	$(INCDIR)programme.h $(INCDIR)type_pile.h $(INCDIR)robot.h $(INCDIR)terrain.h
 
-type_pile.o: type_pile.c type_pile.h
+type_pile.o: $(SRCDIR)type_pile.c $(INCDIR)type_pile.h
 
-curiosity.o: curiosity.c environnement.h programme.h \
-	interprete.h robot.h terrain.h type_pile.h
+curiosity.o: $(SRCDIR)curiosity.c $(INCDIR)environnement.h $(INCDIR)programme.h \
+	$(INCDIR)interprete.h $(INCDIR)robot.h $(INCDIR)terrain.h $(INCDIR)type_pile.h
 
-curiosity-test.o: curiosity-test.c environnement.h programme.h \
-	interprete.h robot.h terrain.h type_pile.h
+curiosity-test.o: $(SRCDIR)curiosity-test.c $(INCDIR)environnement.h $(INCDIR)programme.h \
+	$(INCDIR)interprete.h $(INCDIR)robot.h $(INCDIR)terrain.h $(INCDIR)type_pile.h
 
-generation_terrains.o:generation_terrains.c generation_terrains.h
+generation_terrains.o: $(SRCDIR)generation_terrains.c $(INCDIR)generation_terrains.h
 
-test_generation_terrains.o: test_generation_terrains.c generation_terrains.h terrain.h
+test_generation_terrains.o: $(SRCDIR)test_generation_terrains.c $(INCDIR)generation_terrains.h $(INCDIR)terrain.h
 
 ######################################################################
 #                       Règles d'édition de liens                    #
@@ -73,5 +77,9 @@ curiosity-test%: curiosity-test.o environnement.o programme.o interprete%.o \
 
 test_generation_terrains: test_generation_terrains.o terrain.o generation_terrains.o
 	$(CC) $^ -o $@
+
 clean:
 	rm -f $(PROGRAMMES) *.o
+
+cleanO:
+	rm -f *.o

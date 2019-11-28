@@ -10,8 +10,7 @@
   * @constant	ROCHER		Case occupée par un obstacle de type rocher
   * @constant	EAU			Case occupée par un obstacle de type eau
   */
-typedef enum
-{
+typedef enum {
 	LIBRE,
 	EAU,
 	ROCHER
@@ -27,8 +26,7 @@ typedef enum
  * @field	int		hauteur		hauteru du terrain (ordonnée - y)
  * @field	Case	tab			matrice du terrain (quadrillage)
  */
-typedef struct
-{
+typedef struct {
 	int largeur, hauteur;
 	Case tab[DIM_MAX][DIM_MAX];
 } Terrain;
@@ -48,8 +46,7 @@ typedef struct
  * @constant	ERREUR_POSITION_ROBOT_MANQUANTE		Curiosity non trouvé dans le fichier: non positioné
  * @constant	AUCUNE_ERREUR						aucune erreur trouvée
  */
-typedef enum
-{
+typedef enum {
 	ERREUR_FICHIER,
 	ERREUR_LECTURE_LARGEUR,
 	ERREUR_LECTURE_HAUTEUR,
@@ -68,7 +65,7 @@ typedef enum
 /**
   * @function					lire_terrain
   * @param	char				*nom_fichier		nom du fichier à ouvrir
-  * @param	Terrain_t			*t					terrain (empty)
+  * @param	Terrain				*t					terrain (empty)
   * @param	int					*x					position x du robot Curiosity
   * @param	int					*y					position y du robot Curiosity
   * @return	Erreur_terrain							suivant si la lecture et le stockage des variable s'est bien passé ou non
@@ -116,12 +113,17 @@ void afficher_terrain(Terrain *t, int a, int b);
 /**
   * @function					ecrire_terrain
   * @param	char				*nom_fichier		nom du fichier à ouvrir
-  * @param	Terrain_t			*T					terrain à stringifier dans le fichier
+  * @param	Terrain				*T					terrain à stringifier dans le fichier
   * @param	int					*x					position x du robot Curiosity
   * @param	int					*y					position y du robot Curiosity
  */
 void ecrire_terrain(FILE *f, Terrain T, int x, int y);
 
+/**
+ * @function					caracteristique_terrain
+ * @param	Terrain				*T				Terrain à anayser
+ * @return	int									nombre d'obstacle que le terrain a
+ */
 int caracteristique_terrain(Terrain *T);
 
 #endif

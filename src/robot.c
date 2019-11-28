@@ -1,4 +1,4 @@
-#include "robot.h"
+#include "../include/robot.h"
 #include <stdio.h>
 
 void init_robot(Robot * r, int x, int y, Orientation o) {

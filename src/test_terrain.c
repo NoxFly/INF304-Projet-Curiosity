@@ -1,4 +1,4 @@
-#include "terrain.h"
+#include "../include/terrain.h"
 #include <stdio.h>
 
 /**
