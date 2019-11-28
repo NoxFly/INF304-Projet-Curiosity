@@ -122,4 +122,6 @@ void afficher_terrain(Terrain *t, int a, int b);
  */
 void ecrire_terrain(FILE *f, Terrain T, int x, int y);
 
+int caracteristique_terrain(Terrain *T);
+
 #endif

@@ -34,6 +34,6 @@ void init_etat(etat_inter * etat);
 
 /* Pas d'exécution de l'interprète : exécute une commande, modifie
    l'environnement et l'état, renvoie l'état du robot */
-resultat_inter exec_pas(Programme * prog, Environnement * envt, etat_inter * etat);
+resultat_inter exec_pas(Programme * prog, Environnement * envt, etat_inter * etat, int debug);
 
 #endif

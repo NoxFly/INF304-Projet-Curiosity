@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <unistd.h>
 #include "generation_terrains.h"
 #include "terrain.h"
 
@@ -61,19 +61,37 @@ int main(int argc, char **argv){
 	fprintf(resFile, "%d\n", N);
 
 	// Génération aléatoire des terrains
+	int terrrain_faux = 0;
+	int densitee_moyenne = 0;
 	for(int i = 0; i < N; i++) {
+		printf("Génération d'un terrain aléatoire...\n");
+
 		Terrain T;
-		do {
+		generation_aleatoire(&T, l, h, dObst);
+		while(!existe_chemin_vers_sortie(T)){
 			generation_aleatoire(&T, l, h, dObst);
-		} while(!existe_chemin_vers_sortie(T));
-    printf("Terrain aléatoire numéro %d : \n",i);
+			terrrain_faux ++;
+		}
+
+    	printf("Terrain aléatoire numéro %d : \n",i+1);
 		afficher_terrain(&T,(int)(l/2), (int)(h/2));
-    printf("\n");
+    	printf("\n");
+		int compt = caracteristique_terrain(&T);
+		int val_obst = dObst * 100;
+		printf("Il y a %d d'obstacles dans ce terrain contre %d attendu\n",compt,val_obst);
+		densitee_moyenne = densitee_moyenne + compt;
+
 
 		ecrire_terrain(resFile, T, (int)(l / 2), (int)(h / 2));
 		fprintf(resFile, "\n");
-	}
+		fprintf(resFile,"%d\n",compt);
+		fprintf(resFile, "\n");
 
+		sleep(1);
+	}
+	float prop_terrain_faux = ((terrrain_faux*100.0)/N);
+	fprintf(resFile,"%d\n",(int)densitee_moyenne/N);
+	fprintf(resFile,"%f\n",prop_terrain_faux);
 	// Écriture des terrains générés dans le fichier resFile
 	// Écriture/Affichage des statistiques
 	// fermeture des fichiers

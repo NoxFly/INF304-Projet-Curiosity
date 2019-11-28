@@ -124,10 +124,13 @@ int main(int argc, char **argv) {
 	resultat_inter res;
 
 	if(argc < 2) {
-		printf("Usage: %s <fichier test>\n", argv[0]);
+		printf("Usage: %s <fichier test> [debug]\n", argv[0]);
 		return 1;
 	}
-
+	int debug = 0;
+	if(argc == 3){
+		debug = 1;
+	}
 	ftest = fopen(argv[1], "r");
 
 	fscanf(ftest, "%s\n", nom_fenvt);
@@ -149,7 +152,7 @@ int main(int argc, char **argv) {
 	init_etat(&etat);
 	res = OK_ROBOT;
 	for(nbstep = 0; (nbstep < nbstepmax) && (res == OK_ROBOT); nbstep++) {
-		res = exec_pas(&prog, &envt, &etat);
+		res = exec_pas(&prog, &envt, &etat,debug);
 		afficher_envt(&envt);
 	}
 

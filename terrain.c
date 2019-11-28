@@ -174,3 +174,18 @@ void ecrire_terrain(FILE *f, Terrain T, int x, int y) {
 		if(i < T.hauteur - 1) fprintf(f, "\n");
 	}
 }
+
+
+int caracteristique_terrain(Terrain *T){
+	float compt = 0;
+	int l=T->largeur;
+	int h=T->hauteur;
+	for(int i = 0;i<l;i++){
+		for(int j = 0; j <h;j++){
+			if(T->tab[i][j] == ROCHER || T->tab[i][j] == EAU){
+				compt ++;
+			}
+		}
+	}
+	return compt;
+}

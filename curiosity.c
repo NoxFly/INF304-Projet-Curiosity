@@ -87,7 +87,7 @@ int main(int argc, char **argv) {
 	resultat_inter res;
 
 	if(argc < 3) {
-		printf("Usage: %s <terrain> <programme>\n", argv[0]);
+		printf("Usage: %s <terrain> <programme> [debug]\n", argv[0]);
 		return 1;
 	}
 
@@ -100,10 +100,14 @@ int main(int argc, char **argv) {
 	errp = lire_programme(&prog, argv[2]);
 	gestion_erreur_programme(errp);
 
+	int debug = 0;
+	if(argc == 4){
+		debug = 1;
+	}
 	/* Initialisation de l'état */
 	init_etat(&etat);
 	do {
-		res = exec_pas(&prog, &envt, &etat);
+		res = exec_pas(&prog, &envt, &etat,debug);
 		/* Affichage du terrain et du robot */
 		afficher_envt(&envt);
 	} while (res == OK_ROBOT);

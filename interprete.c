@@ -1,6 +1,8 @@
 #include "interprete.h"
 #include "type_pile.h"
 
+#include <unistd.h>
+
 /* Interprétation d'un programme dans un environnement */
 
 /* Initialisation de l'état */
@@ -12,7 +14,7 @@ void init_etat(etat_inter *etat) {
 
 /* Pas d'exécution de l'interprète : exécute une commande, modifie
    l'environnement et l'état, renvoie l'état du robot */
-resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) {
+resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat,int debug) {
 	Commande c;
 	resultat_deplacement res;
 
@@ -26,9 +28,10 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 
 	// Commande courante
 	c = prog->tab[etat->pc];
-
+	sleep(1);
 	switch(c.cmd) {
 		case Avancer:
+		printf("Le robot avance\n");
 			res = avancer_envt(envt);
 			switch(res) {
 				case OK_DEPL:
@@ -39,14 +42,17 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 				case SORTIE: return SORTIE_ROBOT;
 			}
 		case Gauche:
+		printf("Le robot tourne a gauche\n");
 			gauche_envt(envt);
 			etat->pc++;
 			return OK_ROBOT;
 		case Droite:
+		printf("Le robot va a droite\n");
 			droite_envt(envt);
 			etat->pc++;
 			return OK_ROBOT;
 		case Mesure:
+		printf("Le robot effectue une meusure\n");
 			if(est_vide(&(etat->stack))) {
 				return ERREUR_PILE_VIDE;
 			} else {
@@ -59,16 +65,20 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 				return OK_ROBOT;
 			}
 		case Marque:
+			printf("Le robot vérifie une marque\n");
 			// Non implémenté
 			etat->pc++;
 			return OK_ROBOT;
 		case DebutBloc:
+		printf("Le robot détècte le début d'un block\n");
 			// Empiler le bloc (adresse de début de bloc) sur la pile
 			empiler(&(etat->stack), etat->pc + 1);
 			// Commande suivante : commande suivant la fin du bloc empilé
 			etat->pc = c.aux + 1;
+			printf("Le robot a empiler la commande\n");
 			return OK_ROBOT;
 		case FinBloc:
+		printf("Le robot détècte la fin d'un block\n");
 			if(est_vide(&(etat->sp))) {
 				// Ne devrait pas arriver (prétraitement des blocs)
 				return ERREUR_PILE_VIDE;
@@ -80,10 +90,12 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 				return OK_ROBOT;
 			}
 		case EmpilerNb:
+			printf("Le robot empile un nombre\n");
 			empiler(&(etat->stack), c.aux);
 			etat->pc++;
 			return OK_ROBOT;
 		case ExecBloc:
+		printf("Le robot éxécute le block de commande\n");
 			if(est_vide(&(etat->stack))) {
 				return ERREUR_PILE_VIDE;
 			} else {
@@ -97,6 +109,7 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 				return OK_ROBOT;
 			}
 		case CondExec:
+			printf("Le robot a détécter une condition d'execution\n");
 			if(taille(&(etat->stack)) < 3) {
 				return ERREUR_PILE_VIDE;
 			} else {
@@ -121,6 +134,7 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 				return OK_ROBOT;
 			}
 		case Echange:
+			printf("Le robot echange\n");
 			if(taille(&(etat->stack)) < 2) {
 				return ERREUR_PILE_VIDE;
 			} else {
@@ -135,6 +149,7 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 				return OK_ROBOT;
 			}
 		case Mult:
+		printf("Le robot fait une multiplication\n");
 			if(taille(&(etat->stack)) < 2) {
 				return ERREUR_PILE_VIDE;
 			} else {
@@ -148,6 +163,7 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 				return OK_ROBOT;
 			}
 		case Add:
+		printf("Le robot fait une addition\n");
 			if(taille(&(etat->stack)) < 2) {
 				return ERREUR_PILE_VIDE;
 			} else {
@@ -161,6 +177,7 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 				return OK_ROBOT;
 			}
 		case Div:
+		printf("Le robot fait une division\n");
 			if(taille(&(etat->stack)) < 2) {
 				return ERREUR_PILE_VIDE;
 			} else {
@@ -178,6 +195,7 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 				}
 			}
 		case Sub:
+		printf("Le robot fait une soustraction\n");
 			if(taille(&(etat->stack)) < 2) {
 				return ERREUR_PILE_VIDE;
 			} else {
@@ -191,6 +209,7 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 				return OK_ROBOT;
 			}
 		case Rotation:
+			printf("Le robot fait une rotation\n");
 			if(taille(&(etat->stack)) < 2) {
 				return ERREUR_PILE_VIDE;
 			} else {
@@ -223,6 +242,7 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 				}
 			}
 		case Clone:
+			printf("Le robot clone\n");
 			if(est_vide(&(etat->stack))) {
 				return ERREUR_PILE_VIDE;
 			} else {
@@ -232,6 +252,7 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 				return OK_ROBOT;
 			}
 		case Boucle:
+			printf("Le robot boucle\n");
 			if(taille(&(etat->stack)) < 2) {
 				return ERREUR_PILE_VIDE;
 			} else {
@@ -255,6 +276,7 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat) 
 				return OK_ROBOT;
 			}
 		case Ignore:
+			printf("Le robot ignore\n");
 			if(est_vide(&(etat->stack))) {
 				return ERREUR_PILE_VIDE;
 			} else {
