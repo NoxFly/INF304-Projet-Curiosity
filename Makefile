@@ -1,7 +1,6 @@
 CC := clang -Wall
 SRCDIR := ./src/
 INCDIR := ./include/
-BUILDIR := ./build/
 
 PROGRAMMES := test_terrain test_robot robot_terrain curiosity curiosity-test test_generation_terrains
 
