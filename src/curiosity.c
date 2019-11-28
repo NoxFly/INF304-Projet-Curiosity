@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
 	/* Initialisation de l'état */
 	init_etat(&etat);
 	do {
-		res = exec_pas(&prog, &envt, &etat,debug);
+		res = exec_pas(&prog, &envt, &etat, debug);
 		/* Affichage du terrain et du robot */
 		afficher_envt(&envt);
 	} while (res == OK_ROBOT);

@@ -14,7 +14,7 @@ void init_etat(etat_inter *etat) {
 
 /* Pas d'exécution de l'interprète : exécute une commande, modifie
    l'environnement et l'état, renvoie l'état du robot */
-resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat,int debug) {
+resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat, int debug) {
 	Commande c;
 	resultat_deplacement res;
 
@@ -28,7 +28,7 @@ resultat_inter exec_pas(Programme *prog, Environnement *envt, etat_inter *etat,i
 
 	// Commande courante
 	c = prog->tab[etat->pc];
-	sleep(1);
+	sleep(debug?1:0);
 	switch(c.cmd) {
 		case Avancer:
 		printf("Le robot avance\n");
